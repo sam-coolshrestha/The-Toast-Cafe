@@ -286,13 +286,13 @@
     overflow: hidden;
   }
   .visual-card-tall {
-    height: 260px;
-    background: linear-gradient(135deg, #3D2B1A 0%, #6B4423 50%, #C8860A 100%);
-  }
+  height: 260px;
+}
+ 
   .visual-card-short {
-    height: 160px;
-    background: linear-gradient(135deg, #D4724A 0%, #8B4513 100%);
-  }
+  height: 160px;
+}
+ 
   .visual-card-label {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -300,6 +300,27 @@
     color: rgba(250,247,242,0.9);
     z-index: 2;
   }
+ .visual-card img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.visual-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.35);
+  z-index:1;
+}
+
+.visual-card-label{
+  position:relative;
+  z-index:2;
+}
+ 
   .since-tag {
     position: absolute;
     top: -1.5rem;
