@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Toast Cafe — Agra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --espresso: #1C1209;
+    --amber: #C8860A;
+    --terracotta: #D4724A;
+    --muted: #7A6A58;
+    --light-brown: #E8E0D4;
+    --card-bg: #F3EDE4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--espresso);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--espresso);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 68px;
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    color: var(--light-brown);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--cream);
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: var(--espresso);
+    z-index: 99;
+    padding: 1.5rem 5vw 2rem;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--light-brown);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 1rem;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  /* ── HERO ── */
+  #home {
+    min-height: 100vh;
+    background: var(--espresso);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 5vw 80px;
+  }
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,134,10,0.12) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 80% at 10% 80%, rgba(212,114,74,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 780px; }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber);
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.8rem;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--amber);
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(250,247,242,0.65);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--amber);
+    color: var(--espresso);
+    border: none;
+    padding: 0.9rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #e09a12; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(250,247,242,0.35);
+    padding: 0.9rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--cream); transform: translateY(-2px); }
+  .hero-badges {
+    position: absolute;
+    right: 5vw;
+    bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    z-index: 2;
+  }
+  .rating-badge {
+    background: rgba(250,247,242,0.06);
+    border: 1px solid rgba(250,247,242,0.12);
+    backdrop-filter: blur(8px);
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+  }
+  .rating-badge .stars { color: var(--amber); font-size: 1rem; letter-spacing: 0.1em; }
+  .rating-badge .score {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+    margin: 0.3rem 0;
+  }
+  .rating-badge .count { color: rgba(250,247,242,0.5); font-size: 0.75rem; letter-spacing: 0.08em; }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 100px 5vw; }
+  .section-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--espresso);
+  }
+  .section-title.light { color: var(--cream); }
+
+  /* ── ABOUT ── */
+  #story { background: var(--cream); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: start;
+    margin-top: 4rem;
+  }
+  .about-left .section-title { margin-bottom: 2rem; }
+  .about-left p {
+    color: var(--muted);
+    line-height: 1.85;
+    font-size: 1.02rem;
+    margin-bottom: 1.4rem;
+    font-weight: 300;
+  }
+  .about-left p strong { color: var(--espresso); font-weight: 600; }
+  .about-right { position: relative; }
+  .about-visual-stack { display: flex; flex-direction: column; gap: 1rem; }
+  .visual-card {
+    width: 100%;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-card-tall {
+    height: 260px;
+    background: linear-gradient(135deg, #3D2B1A 0%, #6B4423 50%, #C8860A 100%);
+  }
+  .visual-card-short {
+    height: 160px;
+    background: linear-gradient(135deg, #D4724A 0%, #8B4513 100%);
+  }
+  .visual-card-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(250,247,242,0.9);
+    z-index: 2;
+  }
+  .since-tag {
+    position: absolute;
+    top: -1.5rem;
+    right: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .since-tag::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--muted);
+  }
+
+  /* ── HIGHLIGHTS STRIP ── */
+  #highlights { background: var(--espresso); padding: 80px 5vw; }
+  .highlights-header { margin-bottom: 3.5rem; }
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: rgba(250,247,242,0.08);
+  }
+  .highlight-card {
+    background: var(--espresso);
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(250,247,242,0.06);
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .highlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--amber);
+    transition: height 0.4s ease;
+  }
+  .highlight-card:hover { background: rgba(250,247,242,0.03); }
+  .highlight-card:hover::before { height: 100%; }
+  .hc-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(200,134,10,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s;
+  }
+  .highlight-card:hover .hc-number { color: rgba(200,134,10,0.3); }
+  .hc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    letter-spacing: 0.01em;
+  }
+  .hc-body {
+    color: rgba(250,247,242,0.55);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .hc-tag {
+    margin-top: 2rem;
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 2px;
+  }
+
+  /* ── MENU ── */
+  #menu { background: var(--cream); }
+  .menu-header { margin-bottom: 3rem; }
+  .menu-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--light-brown);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 0.7rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--espresso); }
+  .tab-btn.active { color: var(--espresso); border-bottom-color: var(--amber); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .menu-items { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .menu-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--light-brown);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1.5rem;
+    transition: background 0.2s;
+  }
+  .menu-item:nth-child(even) { padding-left: 3rem; }
+  .menu-item:hover { background: rgba(200,134,10,0.03); }
+  .mi-info { flex: 1; }
+  .mi-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--espresso);
+    margin-bottom: 0.35rem;
+  }
+  .mi-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .mi-price {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--amber);
+    white-space: nowrap;
+    padding-top: 0.2rem;
+  }
+  .mi-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--terracotta);
+    color: white;
+    padding: 0.18rem 0.55rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* ── GALLERY ── */
+  #vibe { background: var(--espresso); padding: 80px 5vw; }
+  .gallery-header { margin-bottom: 2.5rem; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 220px 180px;
+    gap: 6px;
+  }
+  .gallery-grid .g-item:first-child { grid-column: 1 / 3; }
+  .gallery-grid .g-item:nth-child(5) { grid-column: 3 / 5; }
+  .g-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .g-fill {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+  }
+  .g-item:hover .g-fill { transform: scale(1.05); }
+  .g-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(28,18,9,0.8));
+    padding: 1.5rem 1.2rem 0.9rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(250,247,242,0.9);
+    transform: translateY(4px);
+    transition: transform 0.3s;
+  }
+  .g-item:hover .g-label { transform: translateY(0); }
+
+  /* gallery gradients */
+  .g1 { background: linear-gradient(135deg, #5C3317 0%, #9B5E2A 60%, #C8860A 100%); }
+  .g2 { background: linear-gradient(135deg, #1A3A2A 0%, #2D6A4F 100%); }
+  .g3 { background: linear-gradient(135deg, #3D1515 0%, #8B2020 100%); }
+  .g4 { background: linear-gradient(135deg, #2A1A0D 0%, #6B3A0D 70%, #D4724A 100%); }
+  .g5 { background: linear-gradient(135deg, #0D2A2A 0%, #1A5F5F 100%); }
+  .g6 { background: linear-gradient(135deg, #2A2A0D 0%, #7A7A00 100%); }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--card-bg); }
+  .reviews-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .reviews-score {
+    text-align: right;
+  }
+  .rs-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--espresso);
+    line-height: 1;
+  }
+  .rs-stars { color: var(--amber); font-size: 1.1rem; letter-spacing: 0.1em; margin: 0.3rem 0; }
+  .rs-count { font-size: 0.8rem; color: var(--muted); font-weight: 500; letter-spacing: 0.05em; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .review-card {
+    background: var(--cream);
+    padding: 2rem;
+    border: 1px solid rgba(28,18,9,0.07);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .review-card:hover { box-shadow: 0 8px 32px rgba(28,18,9,0.08); transform: translateY(-4px); }
+  .rc-stars { color: var(--amber); font-size: 0.9rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .rc-text {
+    font-size: 0.93rem;
+    color: var(--muted);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  .rc-author { display: flex; align-items: center; gap: 0.8rem; }
+  .rc-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--cream);
+    flex-shrink: 0;
+  }
+  .av1 { background: var(--amber); }
+  .av2 { background: var(--terracotta); }
+  .av3 { background: #6B4423; }
+  .rc-name { font-size: 0.85rem; font-weight: 600; color: var(--espresso); }
+  .rc-via { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+
+  /* ── VISIT ── */
+  #visit { background: var(--cream); }
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+  .visit-info { }
+  .info-block { margin-bottom: 2.5rem; }
+  .ib-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+  }
+  .ib-value {
+    font-size: 1rem;
+    color: var(--espresso);
+    line-height: 1.65;
+  }
+  .ib-value a { color: var(--espresso); text-decoration: none; border-bottom: 1px solid var(--light-brown); transition: border-color 0.2s; }
+  .ib-value a:hover { border-color: var(--amber); }
+  .hours-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1.5rem; }
+  .hours-grid .day { color: var(--muted); font-size: 0.9rem; }
+  .hours-grid .time { font-size: 0.9rem; font-weight: 500; }
+  .visit-map { }
+  .map-wrapper {
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    border: 1px solid var(--light-brown);
+    margin-bottom: 1.5rem;
+  }
+  .map-wrapper iframe { width: 100%; height: 100%; border: none; }
+  .reserve-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--espresso);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1.1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .reserve-cta:hover { background: var(--amber); color: var(--espresso); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--espresso);
+    padding: 60px 5vw 40px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(250,247,242,0.1);
+    margin-bottom: 2rem;
+  }
+  .footer-brand .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.7rem;
+  }
+  .footer-brand .logo span { color: var(--amber); }
+  .footer-brand .tagline {
+    font-size: 0.85rem;
+    color: rgba(250,247,242,0.45);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    max-width: 240px;
+    line-height: 1.5;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a {
+    color: rgba(250,247,242,0.55);
+    text-decoration: none;
+    font-size: 0.83rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(250,247,242,0.55);
+    text-decoration: none;
+    font-size: 0.83rem;
+    border: 1px solid rgba(250,247,242,0.12);
+    padding: 0.55rem 1.1rem;
+    transition: all 0.2s;
+  }
+  .footer-social a:hover { color: var(--cream); border-color: var(--amber); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(250,247,242,0.3); }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-badges { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .highlights-grid { grid-template-columns: 1fr; }
+    .highlight-card { border-bottom: 1px solid rgba(250,247,242,0.06); }
+    .menu-items { grid-template-columns: 1fr; }
+    .menu-item:nth-child(even) { padding-left: 0; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 160px 160px 160px;
+    }
+    .gallery-grid .g-item:first-child { grid-column: 1 / 3; }
+    .gallery-grid .g-item:nth-child(5) { grid-column: auto; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .reviews-header { flex-direction: column; align-items: flex-start; }
+    .reviews-score { text-align: left; }
+    .visit-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; gap: 2rem; }
+  }
+  @media (max-width: 560px) {
+    section { padding: 70px 5vw; }
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(6, 150px);
+    }
+    .gallery-grid .g-item:first-child,
+    .gallery-grid .g-item:nth-child(5) { grid-column: auto; }
+    .menu-tabs { gap: 0.2rem; }
+    .tab-btn { padding: 0.6rem 0.7rem; font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">The <span>Toast</span> Cafe</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+    <li><a href="#visit">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#story" onclick="closeMobile()">Our Story</a>
+  <a href="#menu" onclick="closeMobile()">Menu</a>
+  <a href="#visit" onclick="closeMobile()">Visit Us</a>
+  <a href="#visit" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-texture"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow fade-in">Agra's Neighborhood Cafe</p>
+    <h1 class="hero-headline fade-in fade-in-delay-1">
+      Where <em>Agra</em><br>comes to eat,<br>stay, and breathe.
+    </h1>
+    <p class="hero-sub fade-in fade-in-delay-2">Good coffee, honest food, and the kind of place you keep coming back to — right here in Tajganj.</p>
+    <div class="hero-ctas fade-in fade-in-delay-3">
+      <a href="#menu" class="btn-primary">View Menu</a>
+      <a href="#visit" class="btn-outline">Reserve a Table</a>
+    </div>
+  </div>
+  <div class="hero-badges">
+    <div class="rating-badge">
+      <div class="stars">★★★★★</div>
+      <div class="score">4.8</div>
+      <div class="count">247 Reviews · Google</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="about-grid">
+    <div class="about-left fade-in">
+      <p class="section-eyebrow">Our Story</p>
+      <h2 class="section-title">A cafe born from<br><em style="font-style:italic; color:var(--terracotta)">Agra's own hunger.</em></h2>
+      <p style="margin-top:2rem;">The Toast Cafe didn't start with a business plan. It started with a craving — for a place in this city that felt like <strong>yours</strong>. Somewhere to sit with your laptop and a brown butter latte on a slow Tuesday morning, or pull a chair with friends over a wood-fired pizza on Friday night.</p>
+      <p>We set up shop at Padam Highstreet, Tajganj, tucked into the heart of a neighborhood that already had character. We just gave it a kitchen, a coffee bar, and a reason to stay a little longer.</p>
+      <p>Every item on our menu is built around comfort — the kind that doesn't need to announce itself. Freshly baked breads every morning, handcrafted mocktails, and an espresso program we're quietly obsessed with.</p>
+      <a href="#menu" class="btn-primary" style="margin-top:0.5rem;">Explore the Menu</a>
+    </div>
+    <div class="about-right fade-in fade-in-delay-1">
+      <div class="about-visual-stack">
+        <div class="visual-card visual-card-tall g1">
+          <span class="visual-card-label">The kitchen at work</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="visual-card visual-card-short g4">
+            <span class="visual-card-label">The coffee bar</span>
+          </div>
+          <div class="visual-card visual-card-short g2">
+            <span class="visual-card-label">Fresh bakes daily</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS STRIP -->
+<section id="highlights">
+  <div class="highlights-header fade-in">
+    <p class="section-eyebrow" style="color:var(--amber)">What we do best</p>
+    <h2 class="section-title light">Three things<br>we take seriously.</h2>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-card fade-in">
+      <div class="hc-number">01</div>
+      <h3 class="hc-title">The Coffee</h3>
+      <p class="hc-body">We source single-origin beans and dial in our espresso daily. Our baristas have a standing obsession with getting the extraction just right — and it shows in every cup. Ask about the barista special.</p>
+      <span class="hc-tag">Espresso · Pour Over · Cold Brew</span>
+    </div>
+    <div class="highlight-card fade-in fade-in-delay-1">
+      <div class="hc-number">02</div>
+      <h3 class="hc-title">The Food</h3>
+      <p class="hc-body">Comfort food made properly. Our Detroit-style thin crust pizzas, loaded sliders, and signature Chilli Cheese Toast are the kind of things you'll be thinking about on the way home. Maybe even the next morning.</p>
+      <span class="hc-tag">Pizzas · Toasts · Mains</span>
+    </div>
+    <div class="highlight-card fade-in fade-in-delay-2">
+      <div class="hc-number">03</div>
+      <h3 class="hc-title">The Bakes</h3>
+      <p class="hc-body">Our in-house bakery runs every morning. Focaccia that hits right, croissants with the correct amount of butter, and cakes that people have driven across the city for. Fresh, daily, never frozen.</p>
+      <span class="hc-tag">Breads · Cakes · Desserts</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header fade-in">
+    <p class="section-eyebrow">The Menu</p>
+    <h2 class="section-title">Everything we make,<br>made with care.</h2>
+  </div>
+  <div class="menu-tabs fade-in">
+    <button class="tab-btn active" data-tab="hot">Hot Beverages</button>
+    <button class="tab-btn" data-tab="sliders">Mini Sliders</button>
+    <button class="tab-btn" data-tab="bread">Bread Factory</button>
+    <button class="tab-btn" data-tab="snacks">Snackables</button>
+    <button class="tab-btn" data-tab="entree">Entrée</button>
+    <button class="tab-btn" data-tab="beverages">Beverages</button>
+    <button class="tab-btn" data-tab="pizza">Detroit Pizza</button>
+    <button class="tab-btn" data-tab="dessert">Dessert</button>
+  </div>
+
+  <!-- Hot Beverages -->
+  <div class="tab-panel active" id="tab-hot">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">House Espresso</div><div class="mi-desc">Double shot, single-origin blend, pulled fresh.</div></div><div class="mi-price">₹180</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Flat White</div><div class="mi-desc">Silky microfoam, strong espresso base.</div></div><div class="mi-price">₹200</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Brown Butter Latte<span class="mi-badge">House Special</span></div><div class="mi-desc">Espresso, steamed milk, brown butter caramel swirl.</div></div><div class="mi-price">₹260</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Cinnamon Spiced Cappuccino</div><div class="mi-desc">Classic cap with a warm spice finish.</div></div><div class="mi-price">₹240</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">811 Hot Chocolate</div><div class="mi-desc">Dark Belgian chocolate, full-cream milk, a pinch of salt.</div></div><div class="mi-price">₹280</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Masala Chai</div><div class="mi-desc">Hand-crushed spices, strong Assam tea, ginger-forward.</div></div><div class="mi-price">₹140</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Earl Grey</div><div class="mi-desc">Bergamot loose-leaf, served with honey on the side.</div></div><div class="mi-price">₹160</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">House Drip Vietnamese</div><div class="mi-desc">Slow-drip robusta blend over condensed milk.</div></div><div class="mi-price">₹220</div></div>
+    </div>
+  </div>
+
+  <!-- Sliders -->
+  <div class="tab-panel" id="tab-sliders">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Crispy Chicken Slider</div><div class="mi-desc">Buttermilk fried chicken, pickled slaw, sriracha mayo.</div></div><div class="mi-price">₹320</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Pulled Mushroom Slider</div><div class="mi-desc">BBQ-glazed pulled oyster mushroom, garlic aioli.</div></div><div class="mi-price">₹280</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Paneer Tikka Slider</div><div class="mi-desc">Charred paneer, mint chutney, red onion rings.</div></div><div class="mi-price">₹300</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Double Smash Burger Slider</div><div class="mi-desc">Two smashed beef patties, American cheese, dill pickle.</div></div><div class="mi-price">₹380</div></div>
+    </div>
+  </div>
+
+  <!-- Bread Factory -->
+  <div class="tab-panel" id="tab-bread">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Chilli Cheese Toast<span class="mi-badge">Signature</span></div><div class="mi-desc">House sourdough, aged cheddar, green chilli, caramelised onions.</div></div><div class="mi-price">₹260</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Avocado & Feta Toast</div><div class="mi-desc">Multigrain toast, smashed avo, crumbled feta, chilli flakes.</div></div><div class="mi-price">₹320</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Garlic Focaccia</div><div class="mi-desc">House-baked rosemary focaccia, garlic-herb butter.</div></div><div class="mi-price">₹220</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Eggs on Toast</div><div class="mi-desc">Two scrambled eggs, chive butter, served on thick sourdough.</div></div><div class="mi-price">₹280</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Cinnamon French Toast</div><div class="mi-desc">Brioche, vanilla custard soak, maple syrup, whipped cream.</div></div><div class="mi-price">₹300</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Fat-Cut Multigrain Loaf</div><div class="mi-desc">Baked in-house daily. Available by the slice or whole.</div></div><div class="mi-price">₹60/slice</div></div>
+    </div>
+  </div>
+
+  <!-- Snackables -->
+  <div class="tab-panel" id="tab-snacks">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Peri Peri Fries</div><div class="mi-desc">Thick-cut fries, house peri-peri dust, garlic aioli dip.</div></div><div class="mi-price">₹220</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Truffle Parmesan Fries</div><div class="mi-desc">Shoestring fries, truffle oil, shaved parmesan.</div></div><div class="mi-price">₹280</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Loaded Nachos</div><div class="mi-desc">Corn tortilla chips, salsa, sour cream, jalapeños, cheese sauce.</div></div><div class="mi-price">₹340</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Stuffed Pizza Dough Balls</div><div class="mi-desc">Six baked dough balls, mozzarella-filled, tomato dip.</div></div><div class="mi-price">₹320</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Chilli Cheese Poppers</div><div class="mi-desc">Cream-cheese stuffed jalapeños, crispy panko coat.</div></div><div class="mi-price">₹260</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Mezze Plate</div><div class="mi-desc">Hummus, baba ganoush, warm pita, olives, pickles.</div></div><div class="mi-price">₹380</div></div>
+    </div>
+  </div>
+
+  <!-- Entree -->
+  <div class="tab-panel" id="tab-entree">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Burrito Bowl</div><div class="mi-desc">Cilantro lime rice, black beans, grilled paneer or chicken, salsa.</div></div><div class="mi-price">₹420</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Pesto Pasta</div><div class="mi-desc">Al dente penne, house basil pesto, cherry tomatoes, pine nuts.</div></div><div class="mi-price">₹380</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Grilled Chicken Plate</div><div class="mi-desc">Herb-marinated thigh, roasted vegetables, garlic aioli.</div></div><div class="mi-price">₹480</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Shakshuka</div><div class="mi-desc">Spiced tomato braise, poached eggs, warm bread.</div></div><div class="mi-price">₹360</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Club Sandwich</div><div class="mi-desc">Triple-decker, chicken, bacon, egg, lettuce, tomato, mayo.</div></div><div class="mi-price">₹400</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Mushroom Risotto</div><div class="mi-desc">Arborio, wild mushrooms, parmesan, thyme, truffle butter.</div></div><div class="mi-price">₹440</div></div>
+    </div>
+  </div>
+
+  <!-- Beverages -->
+  <div class="tab-panel" id="tab-beverages">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Masala Lemonade<span class="mi-badge">Fan Favourite</span></div><div class="mi-desc">House lemonade, black salt, roasted jeera, fresh mint.</div></div><div class="mi-price">₹200</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Watermelon Mint Cooler</div><div class="mi-desc">Fresh watermelon, mint, lime, a touch of sea salt.</div></div><div class="mi-price">₹220</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Mango Lassi</div><div class="mi-desc">Alphonso mango, full-fat yogurt, cardamom.</div></div><div class="mi-price">₹200</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Cold Brew Tonic</div><div class="mi-desc">House cold brew, Indian tonic water, orange peel.</div></div><div class="mi-price">₹260</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Rose Iced Tea</div><div class="mi-desc">Hibiscus-rose blend, honey, lemon, served tall.</div></div><div class="mi-price">₹180</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Virgin Mojito</div><div class="mi-desc">Fresh lime, muddled mint, soda, sugar, crushed ice.</div></div><div class="mi-price">₹200</div></div>
+    </div>
+  </div>
+
+  <!-- Detroit Pizza -->
+  <div class="tab-panel" id="tab-pizza">
+    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:2rem; font-style:italic;">Thin crust Detroit-style pies. Baked in a deck oven, sliced to order.</p>
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Margherita</div><div class="mi-desc">San Marzano tomato base, fresh mozzarella, basil oil.</div></div><div class="mi-price">₹480</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Paneer Tikka</div><div class="mi-desc">Tandoori paneer, tikka sauce, red onion, coriander.</div></div><div class="mi-price">₹560</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Farmhouse</div><div class="mi-desc">Seasonal vegetables, oregano, chilli oil, gouda.</div></div><div class="mi-price">₹520</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Truffle Mushroom<span class="mi-badge">Chef's Pick</span></div><div class="mi-desc">Wild mushroom, truffle cream, thyme, aged parmesan.</div></div><div class="mi-price">₹640</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Four Cheese</div><div class="mi-desc">Mozzarella, gouda, parmesan, gorgonzola, honey drizzle.</div></div><div class="mi-price">₹620</div></div>
+    </div>
+  </div>
+
+  <!-- Dessert -->
+  <div class="tab-panel" id="tab-dessert">
+    <div class="menu-items">
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Gooey Brownie</div><div class="mi-desc">Belgian chocolate brownie, molten center, vanilla gelato.</div></div><div class="mi-price">₹260</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">New York Cheesecake</div><div class="mi-desc">Classic baked cheesecake, strawberry compote.</div></div><div class="mi-price">₹300</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Carrot Cake</div><div class="mi-desc">Spiced carrot cake, cream cheese frosting, toasted walnuts.</div></div><div class="mi-price">₹280</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Tiramisu</div><div class="mi-desc">Savoiardi, house espresso soak, mascarpone, cocoa.</div></div><div class="mi-price">₹320</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Affogato</div><div class="mi-desc">A scoop of vanilla gelato drowned in a double espresso.</div></div><div class="mi-price">₹240</div></div>
+      <div class="menu-item"><div class="mi-info"><div class="mi-name">Chocolate Banana Bowl</div><div class="mi-desc">Sliced bananas, dark chocolate drizzle, granola, cream.</div></div><div class="mi-price">₹260</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY / VIBE -->
+<section id="vibe">
+  <div class="gallery-header fade-in">
+    <p class="section-eyebrow" style="color:var(--amber)">The Vibe</p>
+    <h2 class="section-title light">A few things worth<br>coming in for.</h2>
+  </div>
+  <div class="gallery-grid fade-in">
+    <div class="g-item"><div class="g-fill g1"></div><div class="g-label">Chilli Cheese Toast</div></div>
+    <div class="g-item"><div class="g-fill g2"></div><div class="g-label">Masala Lemonade</div></div>
+    <div class="g-item"><div class="g-fill g3"></div><div class="g-label">Detroit Pizza</div></div>
+    <div class="g-item"><div class="g-fill g4"></div><div class="g-label">Brown Butter Latte</div></div>
+    <div class="g-item"><div class="g-fill g5"></div><div class="g-label">The Bakes</div></div>
+    <div class="g-item"><div class="g-fill g6"></div><div class="g-label">Truffle Mushroom</div></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header fade-in">
+    <div>
+      <p class="section-eyebrow">What guests say</p>
+      <h2 class="section-title">247 happy guests<br>and counting.</h2>
+    </div>
+    <div class="reviews-score">
+      <div class="rs-number">4.8</div>
+      <div class="rs-stars">★★★★★</div>
+      <div class="rs-count">Google Reviews · Agra</div>
+    </div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-in">
+      <div class="rc-stars">★★★★★</div>
+      <p class="rc-text">"The Chilli Cheese Toast alone is worth the trip. It sounds simple, but it's one of those things you end up thinking about the next day. The coffee is genuinely good — not just 'good for Agra', just good."</p>
+      <div class="rc-author">
+        <div class="rc-avatar av1">P</div>
+        <div>
+          <div class="rc-name">Priya Mehta</div>
+          <div class="rc-via">Google Review · 3 weeks ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in fade-in-delay-1">
+      <div class="rc-stars">★★★★★</div>
+      <p class="rc-text">"Finally a cafe in Agra with a proper espresso machine and someone who knows how to use it. The Detroit Pizza is fantastic, and the Masala Lemonade is unlike anything I've had — refreshing and deeply desi at the same time."</p>
+      <div class="rc-author">
+        <div class="rc-avatar av2">R</div>
+        <div>
+          <div class="rc-name">Rahul Verma</div>
+          <div class="rc-via">Google Review · 1 month ago</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in fade-in-delay-2">
+      <div class="rc-stars">★★★★★</div>
+      <p class="rc-text">"Came for coffee, stayed three hours. The space has a warmth to it that most cafes just don't have. The Truffle Mushroom pizza is a must. Bakes are fresh and not overly sweet. It's become my go-to for work days."</p>
+      <div class="rc-author">
+        <div class="rc-avatar av3">S</div>
+        <div>
+          <div class="rc-name">Shruti Gupta</div>
+          <div class="rc-via">Google Review · 2 months ago</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT US -->
+<section id="visit">
+  <p class="section-eyebrow fade-in">Find Us</p>
+  <h2 class="section-title fade-in">We're open.<br>Come on in.</h2>
+  <div class="visit-grid">
+    <div class="visit-info fade-in">
+      <div class="info-block">
+        <div class="ib-label">Address</div>
+        <div class="ib-value">Padam Highstreet, Tajganj<br>Agra, Basai<br>Uttar Pradesh 282004</div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Hours</div>
+        <div class="ib-value">
+          <div class="hours-grid">
+            <span class="day">Dine-in</span><span class="time">Opens 1:00 PM</span>
+            <span class="day">Takeout</span><span class="time">2:00 PM – 11:00 PM</span>
+            <span class="day">All week</span><span class="time">Mon – Sun</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Get in Touch</div>
+        <div class="ib-value">
+          <a href="tel:09084687299">090846 87299</a><br>
+          <a href="https://www.instagram.com" target="_blank">@thetoastcafe.agra</a>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Average Spend</div>
+        <div class="ib-value">₹400 – ₹1,000 per person</div>
+      </div>
+    </div>
+    <div class="visit-map fade-in fade-in-delay-1">
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.0!2d78.0422!3d27.1647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39747121d702ff6d%3A0xdd2ae4803f767dbc!2sPadam%20Highstreet%2C%20Tajganj%2C%20Agra%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1699999999999"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="The Toast Cafe Location">
+        </iframe>
+      </div>
+      <a href="tel:09084687299" class="reserve-cta">Reserve a Table — Call 090846 87299</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">The <span>Toast</span> Cafe</div>
+      <div class="tagline">"Where Agra comes to eat, stay, and breathe."</div>
+    </div>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#story">Our Story</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Visit Us</a>
+      <a href="#visit">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com" target="_blank">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        @thetoastcafe.agra
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 The Toast Cafe, Agra. All rights reserved.</p>
+    <p>Padam Highstreet, Tajganj, Agra — 090846 87299</p>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Menu tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Trigger visible for hero elements immediately
+  document.querySelectorAll('#home .fade-in').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 200 + i * 150);
+  });
+</script>
+</body>
+</html>
