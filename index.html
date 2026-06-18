@@ -101,15 +101,26 @@
   .mobile-menu a:last-child { border-bottom: none; }
 
   /* ── HERO ── */
-  #home {
-    min-height: 100vh;
-    background: var(--espresso);
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    padding: 120px 5vw 80px;
-  }
+ #home {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(28,18,9,0.75),
+      rgba(28,18,9,0.75)
+    ),
+    url("bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 120px 5vw 80px;
+}
+ 
   .hero-texture {
     position: absolute;
     inset: 0;
@@ -773,16 +784,19 @@
     </div>
     <div class="about-right fade-in fade-in-delay-1">
       <div class="about-visual-stack">
-        <div class="visual-card visual-card-tall g1">
-          <span class="visual-card-label">The kitchen at work</span>
-        </div>
+        <div class="visual-card visual-card-tall">
+  <img src="interior.jpg" alt="">
+  <span class="visual-card-label">The kitchen at work</span>
+</div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-          <div class="visual-card visual-card-short g4">
-            <span class="visual-card-label">The coffee bar</span>
-          </div>
-          <div class="visual-card visual-card-short g2">
-            <span class="visual-card-label">Fresh bakes daily</span>
-          </div>
+         <div class="visual-card visual-card-short">
+    <img src="interior2.jpg" alt="Coffee Bar">
+    <span class="visual-card-label">The coffee bar</span>
+</div>
+        <div class="visual-card visual-card-short">
+    <img src="bg2.jpg" alt="Fresh Bakes">
+    <span class="visual-card-label">Fresh bakes daily</span>
+</div>
         </div>
       </div>
     </div>
